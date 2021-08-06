@@ -25,11 +25,17 @@ class CountdownTimer {
   }
 
   getTimeComponents(time) {
-    const days = Math.floor(time / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((time % (1000 * 60)) / 1000);
+    const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
+    const hours = this.pad(
+      Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    );
+    const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+    const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
     return { days, hours, mins, secs };
+  }
+
+  pad(value) {
+    return String(value).padStart(2, '0');
   }
 }
 
@@ -40,12 +46,10 @@ function updateFace({ days, hours, mins, secs }) {
   refs.secs.textContent = `${secs}`;
 }
 
-const qwe = new CountdownTimer(
+new CountdownTimer(
   {
     selector: '#timer-1',
-    targetDate: new Date('Dec 28, 2021'),
+    targetDate: new Date('Aug 28, 2021'),
   },
   updateFace,
-);
-
-qwe.startTimer();
+).startTimer();
